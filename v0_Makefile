@@ -1,0 +1,19 @@
+INCLUDES=-I/usr/local/opt/openblas/include
+LIBRARIES=/usr/local/opt/openblas/lib/libopenblas.a \
+	/usr/local/lib/libomp.a \
+	/usr/local/Cellar/gcc/11.1.0_1/lib/gcc/11/libgfortran.a \
+	/usr/local/Cellar/gcc/11.1.0_1/lib/gcc/11/libquadmath.a \
+	/usr/local/Cellar/gcc/11.1.0_1/lib/gcc/11/gcc/x86_64-apple-darwin19/11.1.0/libgcc.a
+
+PROGRAM?=v0
+
+all: build run
+
+build: $(PROGRAM).c
+	gcc $(PROGRAM).c $(INCLUDES) $(LIBRARIES) -o $(PROGRAM).native
+
+run: $(PROGRAM).native
+	./$(PROGRAM).native
+
+clean:
+	rm *.native
